@@ -132,11 +132,25 @@ if os.path.exists(RUTA_RELATIVA):
 else:
     RUTA_PREDETERMINADA = RUTA_ABSOLUTA
 
-# Mismo criterio para el logo
-LOGO_RELATIVO = "PVD.png"
-LOGO_ABSOLUTO = r"C:\Users\ING. YONATHAN JESUS\Desktop\BASE DE DATOS\3. CODIGOS\PVD.png"
+# Mismo criterio y búsqueda robusta para el logo
+posibles_nombres_logo = [
+    "PVD.png",
+    "pvd.png",
+    "PVD.PNG",
+    r"C:\Users\ING. YONATHAN JESUS\Desktop\BASE DE DATOS\3. CODIGOS\PVD.png"
+]
 
-LOGO_PATH = LOGO_RELATIVO if os.path.exists(LOGO_RELATIVO) else LOGO_ABSOLUTO
+logo_encontrado = None
+for ruta in posibles_nombres_logo:
+    if os.path.exists(ruta):
+        logo_encontrado = ruta
+        break
+
+# Centrar logo en la barra lateral usando columnas
+c1, c2, c3 = st.sidebar.columns([1, 2, 1])
+with c2:
+    if logo_encontrado:
+        st.image(logo_encontrado, use_container_width=True)
 
 # Texto de autoría resaltado (más grande, oscuro y centrado)
 st.sidebar.markdown(
