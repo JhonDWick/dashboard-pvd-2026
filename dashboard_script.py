@@ -123,16 +123,20 @@ st.markdown("""
 # -----------------------------------------------------------------------------
 # RUTAS Y CARGA DE DATOS (EXCEL LOCAL + LOGO + SUBIDA ALTERNATIVA)
 # -----------------------------------------------------------------------------
-RUTA_PREDETERMINADA = r"C:\Users\ING. YONATHAN JESUS\Desktop\BASE DE DATOS\3. CODIGOS\seguimiento_rutinario_2026.xlsx"
-LOGO_PATH = r"C:\Users\ING. YONATHAN JESUS\Desktop\BASE DE DATOS\3. CODIGOS\PVD.png"
+# Intenta cargar primero desde la carpeta del proyecto (relativa), y si no existe, usa la ruta local absoluta
+RUTA_RELATIVA = "seguimiento_rutinario_2026.xlsx"
+RUTA_ABSOLUTA = r"C:\Users\ING. YONATHAN JESUS\Desktop\BASE DE DATOS\3. CODIGOS\seguimiento_rutinario_2026.xlsx"
 
-# Centrar logo en la barra lateral usando columnas
-c1, c2, c3 = st.sidebar.columns([1, 2, 1])
-with c2:
-    if os.path.exists(LOGO_PATH):
-        st.image(LOGO_PATH, use_container_width=True)
-    elif os.path.exists("PVD.png"):
-        st.image("PVD.png", use_container_width=True)
+if os.path.exists(RUTA_RELATIVA):
+    RUTA_PREDETERMINADA = RUTA_RELATIVA
+else:
+    RUTA_PREDETERMINADA = RUTA_ABSOLUTA
+
+# Mismo criterio para el logo
+LOGO_RELATIVO = "PVD.png"
+LOGO_ABSOLUTO = r"C:\Users\ING. YONATHAN JESUS\Desktop\BASE DE DATOS\3. CODIGOS\PVD.png"
+
+LOGO_PATH = LOGO_RELATIVO if os.path.exists(LOGO_RELATIVO) else LOGO_ABSOLUTO
 
 # Texto de autoría resaltado (más grande, oscuro y centrado)
 st.sidebar.markdown(
